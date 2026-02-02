@@ -69,7 +69,7 @@ contract PointsHook is BaseHook, ERC1155 {
 	function _afterSwap(
         address,
         PoolKey calldata key,
-        // SwapParams calldata swapParams,
+        SwapParams calldata,
         BalanceDelta delta,
         bytes calldata hookData
     ) internal override returns (bytes4, int128) {
