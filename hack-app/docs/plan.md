@@ -54,7 +54,7 @@ Build a risk‑aware Uniswap v4 hook for ETH/USDC on **Arbitrum Sepolia** that u
 - [x] Implement threshold logic (probability → tier mapping)
 - [x] Publish tier + confidence to `RiskSignal`
 - [x] Add logging and error handling
-- [ ] Test workflow locally via CRE CLI simulation
+- [x] Test workflow locally via CRE CLI simulation
 
 ### Phase 4 — Tests
 
@@ -73,7 +73,7 @@ Build a risk‑aware Uniswap v4 hook for ETH/USDC on **Arbitrum Sepolia** that u
 - [x] Initialize ETH/USDC pool with hook + dynamic fee flag
 - [x] Deploy `PredictionRouter` to Arbitrum Sepolia
 - [x] Seed pool with initial liquidity
-- [ ] Run CRE workflow to update tier
+- [x] Run CRE workflow to update tier
 - [x] Execute swap under Green tier — fee=3000 (0.30%)
 - [x] Execute swap under Amber tier — fee=10000 (1.00%)
 - [x] Attempt swap under Red tier — reverted with SwapBlockedRedTier
