@@ -23,6 +23,9 @@ contract Deploy is Script {
     address constant WETH = 0x980B62Da83eFf3D4576C647993b0c1D7faf17c73;
     address constant USDC = 0x75faf114eafb1BDbe2F0316DF893fd58CE46AA4d;
 
+    // ── CREATE2 Deployer Proxy (used by forge script for salt-based deploys) ──
+    address constant CREATE2_DEPLOYER = 0x4e59b44847b379578588920cA78FbF26c0B4956C;
+
     // ── Config ─────────────────────────────────────────────────────────────
     uint64 constant STALE_WINDOW = 300; // 5 minutes
     int24 constant TICK_SPACING = 60;
@@ -47,8 +50,8 @@ contract Deploy is Script {
         bytes memory constructorArgs = abi.encode(poolManager, riskSignal);
 
         (address hookAddress, bytes32 salt) =
-            HookMiner.find(deployer, flags, type(PredictionHook).creationCode, constructorArgs);
-        console.log("Mining hook address:", hookAddress);
+            HookMiner.find(CREATE2_DEPLOYER, flags, type(PredictionHook).creationCode, constructorArgs);
+        console.log("Mined hook address:", hookAddress);
 
         PredictionHook hook = new PredictionHook{salt: salt}(poolManager, riskSignal);
         require(address(hook) == hookAddress, "Hook address mismatch");
