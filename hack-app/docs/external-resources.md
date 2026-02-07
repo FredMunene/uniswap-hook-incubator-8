@@ -92,11 +92,15 @@ Source: https://docs.uniswap.org/contracts/v4/deployments
 | Prediction markets (NBER)        | https://www.nber.org/papers/w12083     |
 | Implementation shortfall          | https://en.wikipedia.org/wiki/Implementation_shortfall |
 
-## Our Deployed Contracts (to be filled post‑deploy)
+## Our Deployed Contracts (Arbitrum Sepolia)
 
-| Contract          | Address | Deploy tx | Date |
-|------------------|---------|-----------|------|
-| RiskSignal        | TBD     | TBD       | TBD  |
-| PredictionHook    | TBD     | TBD       | TBD  |
-| PredictionRouter  | TBD     | TBD       | TBD  |
-| ETH/USDC Pool     | TBD     | TBD       | TBD  |
+Deployed: 2026-02-07
+
+| Contract          | Address                                      | Tx Hash |
+|------------------|----------------------------------------------|---------|
+| RiskSignal        | `0x7EA6F46b1005B1356524148CDDE4567192301B6e` | [`0x0961...6ff3`](https://sepolia.arbiscan.io/tx/0x09614794c2c00293e1deb81f2e6cbcaf3c79eebf5a88fcc118abc1ae175f6ff3) |
+| PredictionHook    | `0x5CD3508356402e4b3D7E60E7DFeb75eBC8414080` | [`0xe201...1701`](https://sepolia.arbiscan.io/tx/0xe201e45dc873cc0aaddeb98682968eda654d621c2a097cea31bc7f8f49301701) |
+| Pool Initialize   | PoolManager                                   | [`0x815f...f80c`](https://sepolia.arbiscan.io/tx/0x815fcf8c39927e0075498304962bc21daa180dafaea6e10e279f70fd7c1af80c) |
+| PredictionRouter  | `0xA2f89e0e429861602AC731FEa0855d7D8ba7C152` | [`0x883b...49b5`](https://sepolia.arbiscan.io/tx/0x883bb10644e34a69f12931d66e6bd2c1368cbffcd58ca0ff0ae46f518a6d49b5) |
+
+**Pool config:** USDC/WETH, fee = `DYNAMIC_FEE_FLAG` (0x800000), tickSpacing = 60, hook = PredictionHook
