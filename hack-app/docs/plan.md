@@ -40,12 +40,12 @@ Build a risk‑aware Uniswap v4 hook for ETH/USDC on **Arbitrum Sepolia** that u
 
 ### Phase 2 — Contracts (MVP)
 
-- [ ] Initialize Foundry project (`forge init`)
-- [ ] Install v4‑core and v4‑periphery dependencies
-- [ ] Implement `RiskSignal` contract (tier + timestamp + access control + staleness)
-- [ ] Implement `PredictionHook` contract (BaseHook, beforeSwap, dynamic fee)
-- [ ] Implement `PredictionRouter` contract (unlock callback, swap, settle)
-- [ ] Add NatSpec documentation for all public functions
+- [x] Initialize Foundry project (`forge init`)
+- [x] Install v4‑core and v4‑periphery dependencies
+- [x] Implement `RiskSignal` contract (tier + timestamp + access control + staleness)
+- [x] Implement `PredictionHook` contract (IHooks, beforeSwap, dynamic fee)
+- [x] Implement `PredictionRouter` contract (unlock callback, swap, settle)
+- [x] Add NatSpec documentation for all public functions
 - [ ] Mine hook address with correct `beforeSwap` flag
 
 ### Phase 3 — CRE workflow
@@ -58,13 +58,13 @@ Build a risk‑aware Uniswap v4 hook for ETH/USDC on **Arbitrum Sepolia** that u
 
 ### Phase 4 — Tests
 
-- [ ] Unit test: `RiskSignal` — access control, setTier, getTier
-- [ ] Unit test: `RiskSignal` — staleness escalation logic
-- [ ] Unit test: `PredictionHook` — Green tier allows swap at base fee
-- [ ] Unit test: `PredictionHook` — Amber tier allows swap at surcharge fee
-- [ ] Unit test: `PredictionHook` — Red tier reverts swap
-- [ ] Unit test: `PredictionHook` — stale signal escalation
-- [ ] Integration test: mock signal update → routed swap end‑to‑end
+- [x] Unit test: `RiskSignal` — access control, setTier, getTier
+- [x] Unit test: `RiskSignal` — staleness escalation logic
+- [x] Unit test: `PredictionHook` — Green tier allows swap at base fee
+- [x] Unit test: `PredictionHook` — Amber tier allows swap at surcharge fee
+- [x] Unit test: `PredictionHook` — Red tier reverts swap
+- [x] Unit test: `PredictionHook` — stale signal escalation
+- [x] Integration test: mock signal update → routed swap end‑to‑end
 
 ### Phase 5 — Deploy & demo
 

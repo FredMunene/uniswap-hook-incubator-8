@@ -41,7 +41,7 @@ npm run dev
 ### Hook-Centric Design
 
 - **RiskSignal**: Ownable, single updater EOA. Stores tier + updatedAt + confidence in one slot. `getEffectiveTier()` handles staleness escalation.
-- **PredictionHook**: Extends `BaseHook`. Only `beforeSwap` enabled. Reads `RiskSignal.getEffectiveTier()`, returns dynamic fee override. Reverts on Red tier.
+- **PredictionHook**: Implements `IHooks` directly (BaseHook removed in latest v4-periphery). Only `beforeSwap` enabled. Reads `RiskSignal.getEffectiveTier()`, returns dynamic fee override. Reverts on Red tier.
 - **PredictionRouter**: Implements `IUnlockCallback`. Calls `PoolManager.unlock()` -> `swap()` -> settle/take. Validates slippage + deadline.
 
 ### Data Flow
@@ -105,7 +105,7 @@ User -> PredictionRouter -> PoolManager -> PredictionHook.beforeSwap()
 
 ## Commit Format
 
-`type(scope): description` — feat, fix, docs, refactor, test
+`type: clear_commit_message` — no scope, no parentheses. Types: feat, fix, docs, refactor, test
 
 ## Implementation Notes
 
