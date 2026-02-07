@@ -1,0 +1,9 @@
+{
+  "schedule": "*/60 * * * * *",
+  "polymarketConditionId": "<POLYMARKET_CONDITION_ID>",
+  "riskSignalAddress": "<RISK_SIGNAL_CONSUMER_ADDRESS>",
+  "chainSelectorName": "ethereum-testnet-sepolia-arbitrum-1",
+  "gasLimit": "200000",
+  "thresholdGreenMax": 0.10,
+  "thresholdAmberMax": 0.25
+}

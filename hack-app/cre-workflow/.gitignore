@@ -1,3 +1,14 @@
 node_modules/
 dist/
 .env
+cre.env
+tmp.js
+tmp.wasm
+tmp.js.map
+*.wasm
+*.d.ts
+*.js.map
+bun.lock
+my-workflow/main.js
+my-workflow/main.d.ts
+my-workflow/main.js.map
