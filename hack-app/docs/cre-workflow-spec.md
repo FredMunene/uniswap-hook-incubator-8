@@ -129,8 +129,8 @@ On failure:
 | `RISK_SIGNAL_ADDRESS`    | Yes      | Deployed RiskSignal contract address     |
 | `ARBITRUM_SEPOLIA_RPC`   | Yes      | RPC URL (default: `https://sepolia-rollup.arbitrum.io/rpc`) |
 | `UPDATER_PRIVATE_KEY`    | Yes      | Private key of the CRE updater EOA      |
-| `THRESHOLD_GREEN_MAX`    | No       | Default: 0.30                            |
-| `THRESHOLD_AMBER_MAX`    | No       | Default: 0.60                            |
+| `THRESHOLD_GREEN_MAX`    | No       | Default: 0.10                            |
+| `THRESHOLD_AMBER_MAX`    | No       | Default: 0.25                            |
 | `POLL_INTERVAL_MS`       | No       | Default: 60000 (60s)                     |
 
 ## CRE CLI simulation
