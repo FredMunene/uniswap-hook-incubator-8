@@ -306,6 +306,14 @@ Amber swap — SwapRouted event data:
 | Amber (1), confidence 1500 | [`0xff97...3c58`](https://sepolia.arbiscan.io/tx/0xff97ef39165bf2421a05c30ab5d99b726c0a9a59559ac282c4659679a6063c58) |
 | Red (2), confidence 3000 | [`0x91a8...b02a`](https://sepolia.arbiscan.io/tx/0x91a88f346a91a13d7e6bacdfc01ba879015cd57a06cbbcf0f4bf430ece54b02a) |
 
+### CRE Workflow Live Run
+
+| Run | Market Probability | Tier | Confidence (bps) | Tx Hash |
+|-----|--------------------|------|-------------------|---------|
+| 1 (2026-02-07) | 27.55% | Red (2) | 2755 | [`0xbaed...bf92`](https://sepolia.arbiscan.io/tx/0xbaed99b3d527a5607ae78b9ae63f3bf13689c1f19369fa079da6632e61e0bf92) |
+
+The CRE workflow fetched the live Polymarket probability (27.55% chance of ETH dipping to $1,600) and correctly classified it as Red tier (>=25% threshold), publishing `setTier(2, 2755)` on-chain. This proves the full end-to-end pipeline: Polymarket API -> classification -> on-chain RiskSignal update.
+
 ### External Contracts Used
 
 | Contract | Address |
