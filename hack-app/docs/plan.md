@@ -22,8 +22,8 @@ Build a risk‑aware Uniswap v4 hook for ETH/USDC on **Arbitrum Sepolia** that u
 
 - [x] Confirm Arbitrum Sepolia as target chain
 - [x] Confirm RPC URL: `https://sepolia-rollup.arbitrum.io/rpc`
-- [ ] Fund deployer wallet with Arbitrum Sepolia ETH (faucet: https://arbitrum.faucet.dev/)
-- [ ] Mint/obtain test USDC (faucet: https://faucet.circle.com/)
+- [x] Fund deployer wallet with Arbitrum Sepolia ETH (faucet: https://arbitrum.faucet.dev/)
+- [x] Mint/obtain test USDC (faucet: https://faucet.circle.com/)
 - [x] Confirm Polymarket market ID + token ID to monitor
 - [x] Choose CRE workflow language: TypeScript
 
@@ -46,7 +46,7 @@ Build a risk‑aware Uniswap v4 hook for ETH/USDC on **Arbitrum Sepolia** that u
 - [x] Implement `PredictionHook` contract (IHooks, beforeSwap, dynamic fee)
 - [x] Implement `PredictionRouter` contract (unlock callback, swap, settle)
 - [x] Add NatSpec documentation for all public functions
-- [ ] Mine hook address with correct `beforeSwap` flag
+- [x] Mine hook address with correct `beforeSwap` flag
 
 ### Phase 3 — CRE workflow
 
@@ -68,16 +68,16 @@ Build a risk‑aware Uniswap v4 hook for ETH/USDC on **Arbitrum Sepolia** that u
 
 ### Phase 5 — Deploy & demo
 
-- [ ] Deploy `RiskSignal` to Arbitrum Sepolia (deploy script ready)
-- [ ] Deploy `PredictionHook` to Arbitrum Sepolia (CREATE2 mining ready)
-- [ ] Initialize ETH/USDC pool with hook + dynamic fee flag (in deploy script)
-- [ ] Deploy `PredictionRouter` to Arbitrum Sepolia (in deploy script)
-- [ ] Seed pool with initial liquidity
+- [x] Deploy `RiskSignal` to Arbitrum Sepolia
+- [x] Deploy `PredictionHook` to Arbitrum Sepolia (CREATE2 mined address)
+- [x] Initialize ETH/USDC pool with hook + dynamic fee flag
+- [x] Deploy `PredictionRouter` to Arbitrum Sepolia
+- [x] Seed pool with initial liquidity
 - [ ] Run CRE workflow to update tier
-- [ ] Execute swap under Green tier — record tx
-- [ ] Execute swap under Amber tier — record tx
-- [ ] Attempt swap under Red tier — record reverted tx
-- [ ] Record all TxIDs in deployment addresses table
+- [x] Execute swap under Green tier — fee=3000 (0.30%)
+- [x] Execute swap under Amber tier — fee=10000 (1.00%)
+- [x] Attempt swap under Red tier — reverted with SwapBlockedRedTier
+- [x] Record all TxIDs in deployment guide
 
 ### Phase 6 — Hackathon deliverables
 
@@ -92,7 +92,7 @@ Build a risk‑aware Uniswap v4 hook for ETH/USDC on **Arbitrum Sepolia** that u
 | Input                        | Status      | Value / Notes                                     |
 |-----------------------------|-------------|---------------------------------------------------|
 | Arbitrum Sepolia RPC URL     | ✅ Confirmed | `https://sepolia-rollup.arbitrum.io/rpc`          |
-| Deployer wallet              | ⬜ Needed    | Fund via faucet                                   |
+| Deployer wallet              | ✅ Funded    | `0xc879982490b3aB07705eF70d165fd13B391e7704`     |
 | CRE account credentials      | ⬜ Needed    | Chainlink CRE access                             |
 | Polymarket market ID         | ✅ Confirmed | "Will Ethereum dip to $1,600?" — `0xa2e0...13ee`  |
 | WETH address (Arb Sepolia)   | ✅ Confirmed | `0x980B62Da83eFf3D4576C647993b0c1D7faf17c73`     |

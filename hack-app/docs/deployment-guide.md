@@ -258,6 +258,25 @@ cast send $RISK_SIGNAL_ADDRESS \
 | PredictionRouter deploy | [`0x883b...49b5`](https://sepolia.arbiscan.io/tx/0x883bb10644e34a69f12931d66e6bd2c1368cbffcd58ca0ff0ae46f518a6d49b5) |
 | Seed liquidity | [`0x382c...dde1`](https://sepolia.arbiscan.io/tx/0x382c9e2ecc3a35884047928c2146c4552e5390720de3d4d7d1d06b44a8addde1) |
 
+### Demo Swap Transactions
+
+| Tier | Result | Fee (bps) | Tx Hash |
+|------|--------|-----------|---------|
+| Green | Success | 3000 (0.30%) | [`0x7955...768d`](https://sepolia.arbiscan.io/tx/0x795517ad120037d970b28d4f4cd9d20cdcfeddb2ba2d308187b46f8ca3aa768d) |
+| Amber | Success | 10000 (1.00%) | [`0x9557...7ebd`](https://sepolia.arbiscan.io/tx/0x955738e668d3065bf997781356ccc69f3817f96f38fe9cd7c0ee3cbc38437ebd) |
+| Red | Reverted (`SwapBlockedRedTier`) | N/A | Reverted at estimation — no on-chain tx |
+
+**How to verify:** Each successful swap emits a `SwapRouted` event from PredictionHook (`0x5CD3...4080`) with indexed tier and dynamicFee in the event data. Compare the fee field:
+- Green: `0x0bb8` = 3000
+- Amber: `0x2710` = 10000
+
+### Tier Change Transactions
+
+| Tier Set | Tx Hash |
+|----------|---------|
+| Amber (1), confidence 1500 | [`0xff97...3c58`](https://sepolia.arbiscan.io/tx/0xff97ef39165bf2421a05c30ab5d99b726c0a9a59559ac282c4659679a6063c58) |
+| Red (2), confidence 3000 | [`0x91a8...b02a`](https://sepolia.arbiscan.io/tx/0x91a88f346a91a13d7e6bacdfc01ba879015cd57a06cbbcf0f4bf430ece54b02a) |
+
 ### External Contracts Used
 
 | Contract | Address |
