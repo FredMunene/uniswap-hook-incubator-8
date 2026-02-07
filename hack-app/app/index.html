@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prediction-Informed Router</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #0a0a0a; color: #e0e0e0; min-height: 100vh; display: flex; flex-direction: column; align-items: center; padding: 2rem 1rem; }
+        h1 { font-size: 1.6rem; font-weight: 600; margin-bottom: 0.3rem; }
+        .subtitle { color: #888; font-size: 0.85rem; margin-bottom: 2rem; }
+        .card { background: #151515; border: 1px solid #252525; border-radius: 12px; padding: 1.5rem; width: 100%; max-width: 480px; margin-bottom: 1rem; }
+        .card h2 { font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.08em; color: #666; margin-bottom: 1rem; }
+        .tier-display { text-align: center; padding: 1.5rem 0; }
+        .tier-badge { display: inline-block; font-size: 2rem; font-weight: 700; padding: 0.5rem 1.5rem; border-radius: 8px; }
+        .tier-green { background: #0a2e1a; color: #4ade80; border: 1px solid #166534; }
+        .tier-amber { background: #2e1f0a; color: #fbbf24; border: 1px solid #92400e; }
+        .tier-red { background: #2e0a0a; color: #f87171; border: 1px solid #991b1b; }
+        .tier-unknown { background: #1a1a1a; color: #666; border: 1px solid #333; }
+        .tier-label { margin-top: 0.5rem; font-size: 0.8rem; color: #888; }
+        .row { display: flex; justify-content: space-between; align-items: center; padding: 0.6rem 0; border-bottom: 1px solid #1e1e1e; }
+        .row:last-child { border-bottom: none; }
+        .row-label { color: #888; font-size: 0.85rem; }
+        .row-value { font-family: 'SF Mono', 'Fira Code', monospace; font-size: 0.85rem; }
+        .row-value a { color: #60a5fa; text-decoration: none; }
+        .row-value a:hover { text-decoration: underline; }
+        .stale { color: #f87171; }
+        .fresh { color: #4ade80; }
+        .fee-table { width: 100%; border-collapse: collapse; margin-top: 0.5rem; }
+        .fee-table th, .fee-table td { padding: 0.5rem 0.75rem; text-align: left; font-size: 0.8rem; }
+        .fee-table th { color: #666; font-weight: 500; border-bottom: 1px solid #252525; }
+        .fee-table td { border-bottom: 1px solid #1a1a1a; }
+        .fee-table .active-row { background: #1a1a1a; }
+        .refresh-btn { background: #252525; color: #ccc; border: 1px solid #333; border-radius: 6px; padding: 0.4rem 1rem; font-size: 0.8rem; cursor: pointer; margin-top: 1rem; }
+        .refresh-btn:hover { background: #333; }
+        .polymarket { display: flex; align-items: center; gap: 0.5rem; }
+        .prob-bar { flex: 1; height: 6px; background: #252525; border-radius: 3px; overflow: hidden; }
+        .prob-fill { height: 100%; border-radius: 3px; transition: width 0.5s; }
+        .prob-fill.low { background: #4ade80; }
+        .prob-fill.mid { background: #fbbf24; }
+        .prob-fill.high { background: #f87171; }
+        footer { margin-top: 2rem; color: #444; font-size: 0.75rem; text-align: center; }
+        footer a { color: #555; }
+        .loading { color: #666; font-style: italic; }
+    </style>
+</head>
+<body>
+    <h1>Prediction-Informed Router</h1>
+    <p class="subtitle">Uniswap v4 hook with live prediction market risk signals</p>
+
+    <div class="card">
+        <h2>Current Risk Tier</h2>
+        <div class="tier-display">
+            <div id="tier-badge" class="tier-badge tier-unknown">...</div>
+            <div id="tier-label" class="tier-label">Loading...</div>
+        </div>
+    </div>
+
+    <div class="card">
+        <h2>Polymarket Signal</h2>
+        <div class="row">
+            <span class="row-label">Market</span>
+            <span class="row-value"><a href="https://polymarket.com/event/what-price-will-ethereum-hit-in-february-2026" target="_blank">Will ETH dip to $1,600?</a></span>
+        </div>
+        <div class="row">
+            <span class="row-label">Probability</span>
+            <span class="row-value polymarket">
+                <span id="prob-value">—</span>
+                <span class="prob-bar"><span id="prob-fill" class="prob-fill low" style="width:0%"></span></span>
+            </span>
+        </div>
+    </div>
+
+    <div class="card">
+        <h2>On-Chain State</h2>
+        <div class="row">
+            <span class="row-label">Confidence</span>
+            <span class="row-value" id="confidence">—</span>
+        </div>
+        <div class="row">
+            <span class="row-label">Last Updated</span>
+            <span class="row-value" id="updated-at">—</span>
+        </div>
+        <div class="row">
+            <span class="row-label">Staleness</span>
+            <span class="row-value" id="staleness">—</span>
+        </div>
+    </div>
+
+    <div class="card">
+        <h2>Fee Policy</h2>
+        <table class="fee-table">
+            <tr><th>Tier</th><th>Fee</th><th>Threshold</th></tr>
+            <tr id="fee-green"><td>Green</td><td>0.30%</td><td>&lt; 10%</td></tr>
+            <tr id="fee-amber"><td>Amber</td><td>1.00%</td><td>10–24%</td></tr>
+            <tr id="fee-red"><td>Red</td><td>Blocked</td><td>&ge; 25%</td></tr>
+        </table>
+    </div>
+
+    <div class="card">
+        <h2>Contracts (Arbitrum Sepolia)</h2>
+        <div class="row">
+            <span class="row-label">RiskSignal</span>
+            <span class="row-value"><a href="https://sepolia.arbiscan.io/address/0x7EA6F46b1005B1356524148CDDE4567192301B6e" target="_blank">0x7EA6...1B6e</a></span>
+        </div>
+        <div class="row">
+            <span class="row-label">PredictionHook</span>
+            <span class="row-value"><a href="https://sepolia.arbiscan.io/address/0x5CD3508356402e4b3D7E60E7DFeb75eBC8414080" target="_blank">0x5CD3...4080</a></span>
+        </div>
+        <div class="row">
+            <span class="row-label">PredictionRouter</span>
+            <span class="row-value"><a href="https://sepolia.arbiscan.io/address/0xA2f89e0e429861602AC731FEa0855d7D8ba7C152" target="_blank">0xA2f8...7152</a></span>
+        </div>
+        <div class="row">
+            <span class="row-label">Receiver</span>
+            <span class="row-value"><a href="https://sepolia.arbiscan.io/address/0x0CdbE45B99b6f2D1c2CEc65034DA60bA51ef4433" target="_blank">0x0Cdb...4433</a></span>
+        </div>
+    </div>
+
+    <button class="refresh-btn" onclick="refresh()">Refresh</button>
+
+    <footer>
+        <p>Prediction-Informed Router &mdash; Chainlink CRE + Uniswap v4 + Polymarket</p>
+        <p>Arbitrum Sepolia &middot; <a href="https://github.com" target="_blank">Source</a></p>
+    </footer>
+
+    <script type="module">
+        const RPC = "https://sepolia-rollup.arbitrum.io/rpc";
+        const RISK_SIGNAL = "0x7EA6F46b1005B1356524148CDDE4567192301B6e";
+        const POLYMARKET_CONDITION = "0xa2e0e21aab2d6dbdae148134b816c461b6582d216fdc2a783a107b44018713ee";
+        const STALE_WINDOW = 300;
+
+        const TIER_NAMES = ["Green", "Amber", "Red"];
+        const TIER_CLASSES = ["tier-green", "tier-amber", "tier-red"];
+        const FEE_ROW_IDS = ["fee-green", "fee-amber", "fee-red"];
+
+        // Minimal ABI encoding/decoding without external deps
+        async function rpcCall(to, data) {
+            const res = await fetch(RPC, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ jsonrpc: "2.0", id: 1, method: "eth_call", params: [{ to, data }, "latest"] }),
+            });
+            const json = await res.json();
+            return json.result;
+        }
+
+        async function fetchOnChainState() {
+            // getTier() returns (Tier tier, uint64 updatedAt, uint16 confidence)
+            const tierData = await rpcCall(RISK_SIGNAL, "0x5ad701c2"); // getTier()
+            // getEffectiveTier() returns (Tier tier, bool isStale)
+            const effectiveData = await rpcCall(RISK_SIGNAL, "0x162e5515"); // getEffectiveTier()
+
+            if (!tierData || !effectiveData) return null;
+
+            const hex = tierData.slice(2);
+            const rawTier = parseInt(hex.slice(0, 64), 16);
+            const updatedAt = parseInt(hex.slice(64, 128), 16);
+            const confidence = parseInt(hex.slice(128, 192), 16);
+
+            const effHex = effectiveData.slice(2);
+            const effectiveTier = parseInt(effHex.slice(0, 64), 16);
+            const isStale = parseInt(effHex.slice(64, 128), 16) === 1;
+
+            return { rawTier, effectiveTier, updatedAt, confidence, isStale };
+        }
+
+        async function fetchPolymarket() {
+            try {
+                const res = await fetch(`https://clob.polymarket.com/markets/${POLYMARKET_CONDITION}`);
+                const data = await res.json();
+                const yesToken = data.tokens?.find(t => t.outcome === "Yes");
+                return yesToken?.price ?? null;
+            } catch { return null; }
+        }
+
+        function updateUI(state, probability) {
+            const badge = document.getElementById("tier-badge");
+            const label = document.getElementById("tier-label");
+
+            if (!state) {
+                badge.textContent = "?";
+                badge.className = "tier-badge tier-unknown";
+                label.textContent = "Could not fetch on-chain state";
+                return;
+            }
+
+            const tier = state.effectiveTier;
+            badge.textContent = TIER_NAMES[tier] || "?";
+            badge.className = `tier-badge ${TIER_CLASSES[tier] || "tier-unknown"}`;
+
+            const staleText = state.isStale ? " (escalated from stale signal)" : "";
+            label.textContent = `Effective tier${staleText}`;
+
+            // Confidence
+            document.getElementById("confidence").textContent = `${state.confidence} bps (${(state.confidence / 100).toFixed(2)}%)`;
+
+            // Updated at
+            if (state.updatedAt > 0) {
+                const date = new Date(state.updatedAt * 1000);
+                document.getElementById("updated-at").textContent = date.toLocaleString();
+            } else {
+                document.getElementById("updated-at").textContent = "Never";
+            }
+
+            // Staleness
+            const stalenessEl = document.getElementById("staleness");
+            if (state.updatedAt > 0) {
+                const age = Math.floor(Date.now() / 1000) - state.updatedAt;
+                const mins = Math.floor(age / 60);
+                const secs = age % 60;
+                stalenessEl.textContent = `${mins}m ${secs}s ago`;
+                stalenessEl.className = `row-value ${state.isStale ? "stale" : "fresh"}`;
+            } else {
+                stalenessEl.textContent = "N/A";
+            }
+
+            // Highlight active fee row
+            FEE_ROW_IDS.forEach((id, i) => {
+                document.getElementById(id).className = i === tier ? "active-row" : "";
+            });
+
+            // Polymarket
+            if (probability !== null) {
+                const pct = (probability * 100).toFixed(1);
+                document.getElementById("prob-value").textContent = `${pct}%`;
+                const fill = document.getElementById("prob-fill");
+                fill.style.width = `${pct}%`;
+                fill.className = `prob-fill ${probability < 0.1 ? "low" : probability < 0.25 ? "mid" : "high"}`;
+            }
+        }
+
+        window.refresh = async function () {
+            const [state, prob] = await Promise.all([fetchOnChainState(), fetchPolymarket()]);
+            updateUI(state, prob);
+        };
+
+        refresh();
+        setInterval(refresh, 30000);
+    </script>
+</body>
+</html>
