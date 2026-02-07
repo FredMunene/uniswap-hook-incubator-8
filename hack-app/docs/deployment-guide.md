@@ -247,6 +247,7 @@ cast send $RISK_SIGNAL_ADDRESS \
 | RiskSignal | `0x7EA6F46b1005B1356524148CDDE4567192301B6e` | [View](https://sepolia.arbiscan.io/address/0x7EA6F46b1005B1356524148CDDE4567192301B6e) |
 | PredictionHook | `0x5CD3508356402e4b3D7E60E7DFeb75eBC8414080` | [View](https://sepolia.arbiscan.io/address/0x5CD3508356402e4b3D7E60E7DFeb75eBC8414080) |
 | PredictionRouter | `0xA2f89e0e429861602AC731FEa0855d7D8ba7C152` | [View](https://sepolia.arbiscan.io/address/0xA2f89e0e429861602AC731FEa0855d7D8ba7C152) |
+| RiskSignalReceiver | `0x0CdbE45B99b6f2D1c2CEc65034DA60bA51ef4433` | [View](https://sepolia.arbiscan.io/address/0x0CdbE45B99b6f2D1c2CEc65034DA60bA51ef4433) |
 
 ### Deploy Transactions
 
@@ -257,6 +258,8 @@ cast send $RISK_SIGNAL_ADDRESS \
 | Pool initialize | [`0x815f...f80c`](https://sepolia.arbiscan.io/tx/0x815fcf8c39927e0075498304962bc21daa180dafaea6e10e279f70fd7c1af80c) |
 | PredictionRouter deploy | [`0x883b...49b5`](https://sepolia.arbiscan.io/tx/0x883bb10644e34a69f12931d66e6bd2c1368cbffcd58ca0ff0ae46f518a6d49b5) |
 | Seed liquidity | [`0x382c...dde1`](https://sepolia.arbiscan.io/tx/0x382c9e2ecc3a35884047928c2146c4552e5390720de3d4d7d1d06b44a8addde1) |
+| RiskSignalReceiver deploy | [`0x8d80...6abe`](https://sepolia.arbiscan.io/tx/0x8d803b9c0b9d3d68b4b4d719d62bda1623159dcffcd72fe9cfc4002d66f46abe) |
+| Set updater to receiver | [`0x025a...a616`](https://sepolia.arbiscan.io/tx/0x025a6e688cb63cb7ee7c7d313643b544ee930e2dff0e571d3845df2130d0a616) |
 
 ### Demo Swap Transactions
 
