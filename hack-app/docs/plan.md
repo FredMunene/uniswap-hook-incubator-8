@@ -50,10 +50,10 @@ Build a risk‑aware Uniswap v4 hook for ETH/USDC on **Arbitrum Sepolia** that u
 
 ### Phase 3 — CRE workflow
 
-- [ ] Build CRE workflow to fetch Polymarket signal
-- [ ] Implement threshold logic (probability → tier mapping)
-- [ ] Publish tier + confidence to `RiskSignal`
-- [ ] Add logging and error handling
+- [x] Build CRE workflow to fetch Polymarket signal
+- [x] Implement threshold logic (probability → tier mapping)
+- [x] Publish tier + confidence to `RiskSignal`
+- [x] Add logging and error handling
 - [ ] Test workflow locally via CRE CLI simulation
 
 ### Phase 4 — Tests
@@ -68,10 +68,10 @@ Build a risk‑aware Uniswap v4 hook for ETH/USDC on **Arbitrum Sepolia** that u
 
 ### Phase 5 — Deploy & demo
 
-- [ ] Deploy `RiskSignal` to Arbitrum Sepolia
-- [ ] Deploy `PredictionHook` to Arbitrum Sepolia (mined address)
-- [ ] Initialize ETH/USDC pool with hook + dynamic fee flag
-- [ ] Deploy `PredictionRouter` to Arbitrum Sepolia
+- [ ] Deploy `RiskSignal` to Arbitrum Sepolia (deploy script ready)
+- [ ] Deploy `PredictionHook` to Arbitrum Sepolia (CREATE2 mining ready)
+- [ ] Initialize ETH/USDC pool with hook + dynamic fee flag (in deploy script)
+- [ ] Deploy `PredictionRouter` to Arbitrum Sepolia (in deploy script)
 - [ ] Seed pool with initial liquidity
 - [ ] Run CRE workflow to update tier
 - [ ] Execute swap under Green tier — record tx
