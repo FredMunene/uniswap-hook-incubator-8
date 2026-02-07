@@ -207,9 +207,14 @@
             const stalenessEl = document.getElementById("staleness");
             if (state.updatedAt > 0) {
                 const age = Math.floor(Date.now() / 1000) - state.updatedAt;
-                const mins = Math.floor(age / 60);
+                const hrs = Math.floor(age / 3600);
+                const mins = Math.floor((age % 3600) / 60);
                 const secs = age % 60;
-                stalenessEl.textContent = `${mins}m ${secs}s ago`;
+                const parts = [];
+                if (hrs > 0) parts.push(`${hrs}h`);
+                if (mins > 0 || hrs > 0) parts.push(`${mins}m`);
+                parts.push(`${secs}s`);
+                stalenessEl.textContent = `${parts.join(" ")} ago`;
                 stalenessEl.className = `row-value ${state.isStale ? "stale" : "fresh"}`;
             } else {
                 stalenessEl.textContent = "N/A";
