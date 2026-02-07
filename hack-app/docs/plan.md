@@ -82,8 +82,8 @@ Build a risk‑aware Uniswap v4 hook for ETH/USDC on **Arbitrum Sepolia** that u
 ### Phase 6 — Hackathon deliverables
 
 - [ ] Demo video (≤ 3 min) showing tier changes + swap outcomes
-- [ ] README with runbook, TxIDs, and setup instructions
-- [ ] Fill Chainlink submission form fields
+- [x] README with runbook, TxIDs, and setup instructions
+- [x] Fill Chainlink submission form fields
 - [ ] Fill Uniswap submission fields
 - [ ] Confirm Arbitrum Open House submission
 
