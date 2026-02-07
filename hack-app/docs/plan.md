@@ -36,7 +36,7 @@ Build a risk‑aware Uniswap v4 hook for ETH/USDC on **Arbitrum Sepolia** that u
 - [x] Create CRE workflow spec (`cre-workflow-spec.md`)
 - [x] Update specs with concrete values
 - [x] Fill in CLAUDE.md
-- [ ] Update README with system overview + dependencies
+- [x] Update README with system overview + dependencies
 
 ### Phase 2 — Contracts (MVP)
 
